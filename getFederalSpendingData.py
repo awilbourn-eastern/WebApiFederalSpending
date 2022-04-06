@@ -27,8 +27,8 @@ def main(argv=None):
 
 def dfToJSON(df):
     '''This will take a dataframe and return the data formated as JSON by records'''
-    dfAsJSON = df.to_json(orient = 'records')
-    return json.loads(json.dumps(dfAsJSON, indent=4)) 
+    dfAsJSON = df.to_json(orient = 'records', double_precision=2) #if precision not there goes to more than 2 digits
+    return json.loads(json.dumps(dfAsJSON, indent=4))  
 
 #TODO: Added functions to pull answers to questions, they must live here in the base, but can be added to the datautils as the actual code
 def getQuestion1Answer():
