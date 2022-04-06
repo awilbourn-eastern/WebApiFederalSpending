@@ -21,25 +21,28 @@ Account 020 <br/>
 The basic structure of each department is as follows:
 ![Example JSON](/images/SampleJson.png "Sample JSON")
 
-Significance of numbered labels in screen shot:
-1.	toptier_code: Indication of the main federal agency account the data shows.
-2.	fiscal_year: The year the data returned contains
-3.	page_metadata["page"]: the current page being reviewed
-4.	page_metadata["next"]: the next page to pull to get data
-5.	page_metadata["hasNext"]: indication if there is another page of data to pull results for
-6.	results[0]["name"]: this is the name of the department
-7.	results[0]["children"][0]["code"]: the child department code
-8.	results[0]["children"][0]["obligated_amount"]: the amount for each child department used for answering the questions for amounts asked
+Significance of numbered labels in screen shot, presume data stored in object called data:
+NOTE: the results example is just syntax to get the first item for example only
+1.	`data["toptier_code"]`: Indication of the main federal agency account the data shows.
+2.	`data["fiscal_year"]`: The year the data returned contains
+3.	`data["page_metadata"]["page"]`: the current page being reviewed
+4.	`data["page_metadata"]["next"]`: the next page to pull to get data
+5.	`data["page_metadata"]["hasNext"]`: indication if there is another page of data to pull results for
+6.	`data["results"][0]["name"]`: this is the name of the department
+7.	`data["results"][0]["children"][0]["code"]`: the child department code
+8.	`data["results"][0]["children"][0]["obligated_amount"]`: the amount for each child department used for answering the questions for amounts asked
+
 
 The assignment is to import all the data for the **accounts** and **fiscal_years** that are passed into the application and store the data in a database. This will ensure values are not hard coded in the results to return. Provided with the given SQLite schema, store the data in an SQLite database and use queries to obtain the answers. In some cases, a dataframe is returned, in others it is just a single value only as indicated. Think about building this in a modular, reusable, chucks of code. 
 
-If a specific account in asked in the question verify the account data exists first, if not found in the data return a message like "`{account} is not found in the data`" replacing the appropriate value that may have been passed in. To be clear, if account 075 was passed in on the command line rather than 012 and 020, then questions related to the accounts 012 and 020 will not be able to be answered, or child department details. Therefore, checking the values of what was loaded in the data prior to querying for the database is needed, as simple check if an account number exists and return true or false will work.
-To obtain the answers build a function to get the data in the form of getQuestion<span style="background:yellow;color:black;">[x]</span>Answer, the <span style="background:yellow;color:black;">[x]</span> being the question number. Example: `getQuestion1Answer()` - `getQuestion8Answer()`
+If a specific account in asked in the question verify the account data exists first, if not found in the data return a message like "`{account} is not found in the data`" replacing the appropriate value that may have been passed in. To be clear, if account 075 was passed in on the command line rather than 012 and 020, then questions related to the accounts 012 and 020 will not be able to be answered, or child department details. Therefore, checking the values of what was loaded in the data prior to querying for the database is needed, as simple check if an account number exists and return true or false will work and if false the message as indicated.
+
+To obtain the answers add code to function shells in the form of getQuestion<span style="background:yellow;color:black;">[x]</span>Answer, the <span style="background:yellow;color:black;">[x]</span> being the question number. Example: `getQuestion1Answer()` - `getQuestion8Answer()`
 
 The data is to be loaded by calling the main function and ensure to parse the arguments passed to build an algorithm to be able to load the data based on the parameters and results returned.
 
 ## SQLite Schema
-Like the demo lecture, create a way to build the SQlite database structure. Each table would be filled as the data is retrieved and they querying of the data is how answers are returned. The underline are the primary keys of each table, so duplicate values are not allowed.
+Like the demo lecture, create a way to build the SQlite database structure. Each table would be filled as the data is retrieved and then querying of the data is how answers are returned. The underline are the primary keys of each table, so duplicate values are not allowed.
 
 **NOTE:** The table of accounts is not as beneficial as we have minimum other attributes to store, but the exercise is to help reinforce how relationships exist in databases. So at minimum an INSERT is required for each account passed in as an argument and the core URL for that given account. An example is [https://api.usaspending.gov/api/v2/agency/<span style="background:yellow">020</span>/federal_account/](https://api.usaspending.gov/api/v2/agency/020/federal_account/). Think of a base URL in a config settings.json to read from and replace the yellow for each account to be written to the database. A set of functions were created similar to the lecture as a starting point, minus the ability to delete the existing database if needed.
 
@@ -55,8 +58,6 @@ CREATE TABLE IF NOT EXISTS "Departments" (
 	"dept_code"	TEXT,
 	"toptier_code"	TEXT,
 	"dept_name"	TEXT NOT NULL,
-	"dept_obligated_amount"	REAL NOT NULL DEFAULT 0,
-	"dept_gross_outlay_amount"	REAL NOT NULL DEFAULT 0,
 	PRIMARY KEY("dept_code"),
 	CONSTRAINT "FK_Accounts" FOREIGN KEY("toptier_code") REFERENCES Accounts(toptier_code)
 );
@@ -73,19 +74,21 @@ CREATE TABLE IF NOT EXISTS "SubDepartments" (
 
 ```
 
+Within the data for INSERT statements if you follow the lecture method, then an extra step of cleanup of values is needed, which for the names of department we need to look and replace a single apostrophe to a double. The name with an issue has "**Survivor's**" in it, so to replace will fix that issue. This is common for SQL interaction, so a common thing to clean up the same way. So for string data you would just use something like the following on the value:  `.replace("'", "''")`
+
 ## Questions:
-For the following print the output to the screen to have “Question X Answer” followed by a line break and then the output. This will show the answer just after the label. Placeholders will be in the starting code block.
+For the following print the output to the screen to have “Question X Answer” followed by a line break and then the output. This will show the answer just after the label. Placeholders will be in the starting code block. When you see the work total, think about the aggregate function of `SUM` for the database query. Round amounts to 2 decimal places.
 
 1.	What is the total for the children accounts **obligated_amount** for all accounts and fiscal_years, single value only not a dataframe?
-2.	What is the sub_dept_code for the department that has the highest **obligated_amount** for the 020 account, single value only not a dataframe?
-3.	What is the dept_name for the department that has the lowest **obligated_amount** for the 020 account, single value only not a dataframe?
-4.	What is the sub_dept_code for the department that has the highest **obligated_amount** for the 012 account, as a dataframe column name to match the database column name?
-5.	What is the account name for the department that has the lowest **obligated_amount** for the 012 account, as a dataframe column name to match the database column name?
-6.	Return a dataframe to include the account number (based arguments from the console: example 012 or 020), the department name (item 6 in above highlight), the child sub-department code (item 7 in above highlight) and the obligated_amount (item 8 in above highlight) for the top 10 sub-departments. Name the columns in the dataframe to match the database as toptier_code, dept_name, sub_dept_code, and sub_obligate_amount. This is not to be hard coded for accounts as automated testing may pass other accounts in.
+2.	What is the sub_dept_code for the department that has the total amount highest for obligated_amount for the **020** account, single value only not a dataframe?
+3.	What is the dept_name for the department that has the total lowest **obligated_amount** for the **012** account, single value only not a dataframe?
+4.	What is the sub_dept_code for the department that has the total highest **obligated_amount** for the **012** account, as a dataframe column name to match the database column name?
+5.	What is the department name that has the total lowest **obligated_amount** for the **012** account, as a dataframe column name to match the database column name of dept_name and total alias as sub_obligated_amount which has an amount greater than $1000?
+6.	Return a dataframe to include the account number (based arguments from the console: example 012 or 020), the department name (item 6 in above JSON highlight), the child sub-department code (item 7 in above highlight) and the obligated_amount (item 8 in above highlight) for the top 10 sub-departments. Name the columns in the dataframe to match the database as toptier_code, dept_name, sub_dept_code, and sub_obligate_amount. This is not to be hard coded for accounts as automated testing may pass other accounts in. Print the dataframe using the provided base code to call the function `dfToJSON`.
     > Hint having passed 012 and 020 as the accounts: the amount should total $3,590,396,851,567.66
-7.	What is the **obligated_amount** for the sub-department of 012-X-2278-000, single value only not a dataframe?
+7.	What is the total of the obligated_amount for the sub-department of 012-X-2278-000, which is part of account **012**, single value only not a dataframe?
     > Hint: is it a negative value.
-8.	How many distinct sub-department codes are there, single value only not a dataframe?
+8.	How many distinct sub-department codes are there for accounts and all years data loaded, single value only not a dataframe?
 
 The documentation for the API is found at:
 https://github.com/fedspendingtransparency/usaspending-api/blob/master/usaspending_api/api_contracts/contracts/v2/agency/toptier_code/federal_account.md
