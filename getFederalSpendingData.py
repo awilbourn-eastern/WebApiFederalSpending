@@ -25,6 +25,11 @@ def main(argv=None):
     except Exception as err:
         print(err)
 
+def dfToJSON(df):
+    '''This will take a dataframe and return the data formated as JSON by records'''
+    dfAsJSON = df.to_json(orient = 'records')
+    return json.loads(json.dumps(dfAsJSON, indent=4)) 
+
 #TODO: Added functions to pull answers to questions, they must live here in the base, but can be added to the datautils as the actual code
 def getQuestion1Answer():
     answer = ""
@@ -70,7 +75,7 @@ def getQuestion6Answer():
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 6 Answer\n")
-    print(answer)
+    print(dfToJSON(answer))
     return answer
 
 def getQuestion7Answer():
