@@ -31,14 +31,16 @@ def getQuestion1Answer():
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
 
     print("Question 1 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 def getQuestion2Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 2 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 def getQuestion3Answer():
     answer = ""
@@ -52,34 +54,39 @@ def getQuestion4Answer():
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 4 Answer\n")
-    print(answer)      
+    print(answer)
+    return answer
 
 def getQuestion5Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 5 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 def getQuestion6Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 6 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 def getQuestion7Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 7 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 def getQuestion8Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 8 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 main(sys.argv)
