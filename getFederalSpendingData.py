@@ -25,20 +25,27 @@ def main(argv=None):
     except Exception as err:
         print(err)
 
+def dfToJSON(df):
+    '''This will take a dataframe and return the data formated as JSON by records'''
+    dfAsJSON = df.to_json(orient = 'records')
+    return json.loads(json.dumps(dfAsJSON, indent=4)) 
+
 #TODO: Added functions to pull answers to questions, they must live here in the base, but can be added to the datautils as the actual code
 def getQuestion1Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
 
     print("Question 1 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 def getQuestion2Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 2 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 def getQuestion3Answer():
     answer = ""
@@ -52,34 +59,39 @@ def getQuestion4Answer():
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 4 Answer\n")
-    print(answer)      
+    print(answer)
+    return answer
 
 def getQuestion5Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 5 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 def getQuestion6Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 6 Answer\n")
-    print(answer) 
+    print(dfToJSON(answer))
+    return answer
 
 def getQuestion7Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 7 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 def getQuestion8Answer():
     answer = ""
     #TODO: code the way get the answer, but could be call to the datautils to have a set of functions there
     
     print("Question 8 Answer\n")
-    print(answer) 
+    print(answer)
+    return answer
 
 main(sys.argv)

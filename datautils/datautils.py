@@ -39,8 +39,6 @@ def setupSQLiteTables(deleteExistingDatabase = False):
             "dept_code"	TEXT,
             "toptier_code"	TEXT,
             "dept_name"	TEXT NOT NULL,
-            "dept_obligated_amount"	REAL NOT NULL DEFAULT 0,
-            "dept_gross_outlay_amount"	REAL NOT NULL DEFAULT 0,
             PRIMARY KEY("dept_code"),
             CONSTRAINT "FK_Accounts" FOREIGN KEY("toptier_code") REFERENCES Accounts(toptier_code)
         );
