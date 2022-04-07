@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS "SubDepartments" (
 
 ```
 
-Within the data for INSERT statements if you follow the lecture method, then an extra step of cleanup of values is needed, which for the names of department we need to look and replace a single apostrophe to a double. The name with an issue has "**Survivor's**" in it, so to replace will fix that issue. This is common for SQL interaction, so a common thing to clean up the same way. So for string data you would just use something like the following on the value:  `.replace("'", "''")`
+Within the data for INSERT statements if you follow the lecture method, then an extra step of cleanup of values is needed, which for the names of department we need to look and replace a single apostrophe to a double. The name with an issue has "**Survivor's**" in it, so to replace will fix that issue. This is common for SQL injection, so a common thing to clean up the same way. So for string data you would just use something like the following on the value:  `.replace("'", "''")`
 
 ## Questions:
 For the following print the output to the screen to have “Question X Answer” followed by a line break and then the output. This will show the answer just after the label. Placeholders will be in the starting code block. When you see the work total, think about the aggregate function of `SUM` for the database query. Round amounts to 2 decimal places.
